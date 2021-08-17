@@ -1,0 +1,15 @@
+<div>
+    <img src="{% static `book_img/{{id}}.jpg` %}" width="110" height="110">
+    <span>{{book.book_name}}</span>
+    {% block card_content %}
+    <span>
+        {% if rented == -1 %}
+        0
+        {% else %}
+        1
+        {% endif %}
+        권 남음
+    </span>
+    <button type="submit">대여하기</button>
+    {% endblock %}
+</div>
