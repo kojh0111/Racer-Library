@@ -6,8 +6,8 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-<form action="" method="post">
-    <input type="username" name="username" id="username" />
+<form action="{{ url_for('auth.register') }}" method="post">
+    <input type="text" name="username" id="username" />
     <input type="email" name="email" id="email" />
     <input type="password" name="password" id="password" />
     <input type="password" name="passwordcheck" id="passwordcheck" />

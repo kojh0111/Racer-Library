@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{book_name}}{% endblock %}
+{% block title %}{{book.book_name}}{% endblock %}
 
 {% block content %}
 <div>
@@ -14,18 +14,18 @@
             <div>ISBN 코드</div>
         </div>
         <div>
-            <div>{{book_name}}</div>
-            <div>{{publisher}}</div>
-            <div>{{author}}</div>
-            <div>{{publication_date}}</div>
-            <div>{{pages}}</div>
-            <div>{{isbn}}</div>
+            <div>{{book.book_name}}</div>
+            <div>{{book.publisher}}</div>
+            <div>{{book.author}}</div>
+            <div>{{book.publication_date}}</div>
+            <div>{{book.pages}}</div>
+            <div>{{book.isbn}}</div>
         </div>
     </div>
 </div>
 <h3>책 소개</h3>
 <div>
-    {{description}}
+    {{book.description}}
 </div>
 {% include "partials/comment.html" %}
 {% endblock %}
