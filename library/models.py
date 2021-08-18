@@ -30,6 +30,8 @@ class libraryBook(db.Model):
     isbn = db.Column(db.String(13))
     description = db.Column(db.Text())
     link = db.Column(db.String(255))
+    photo = db.Column(db.String(255))
+    rented = db.Column(db.Boolean, default=False)
 
 
 class rentalBook(db.Model):
