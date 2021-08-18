@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{book_name}}{% endblock %}
+
+{% block content %}
+<div>
+    <img src="{% static `book_img/{{id}}.jpg` %}" width="267" height="267">
+    <div>
+        <div>
+            <div>책이름</div>
+            <div>출판사</div>
+            <div>저자</div>
+            <div>출간일</div>
+            <div>페이지 수</div>
+            <div>ISBN 코드</div>
+        </div>
+        <div>
+            <div>{{book_name}}</div>
+            <div>{{publisher}}</div>
+            <div>{{author}}</div>
+            <div>{{publication_date}}</div>
+            <div>{{pages}}</div>
+            <div>{{isbn}}</div>
+        </div>
+    </div>
+</div>
+<h3>책 소개</h3>
+<div>
+    {{description}}
+</div>
+{% include "partials/comment.html" %}
+{% endblock %}
