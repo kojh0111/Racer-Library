@@ -1,6 +1,6 @@
 <div>
-    <img src="{% static `book_img/{{id}}.jpg` %}" width="110" height="110">
-    <span>{{book.book_name}}</span>
+    <img src="{% static `book_img/{{book.id}}.jpg` %}" width="110" height="110">
+    <a href="{{ url_for('book.book_detail') }}"><span>{{book.book_name}}</span></a>
     {% block card_content %}
     <span>
         {% if rented == -1 %}

@@ -1,6 +1,7 @@
-from models import *
+from models import libraryUser, db
 from flask import Blueprint, render_template, redirect, url_for, request, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from validator import passwordCheck, emailCheck, usernameCheck
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -12,8 +13,10 @@ def login():
         password = request.form["password"]
         user = libraryUser.query.filter(libraryUser.email == email).first()
         if not user:
+            flash("아이디 또는 비밀번호가 틀립니다. 다시 한 번 확인해주세요.")
             return redirect(url_for("auth.login"))
         elif not check_password_hash(user.password, password):
+            flash("비밀번호가 일치하지 않습니다.")
             return redirect(url_for("auth.login"))
 
         session.clear()
@@ -39,15 +42,23 @@ def register():
             flash("비밀번호가 일치하지 않습니다.")
             return redirect(url_for("auth.register"))
         else:
-            password = generate_password_hash(password)
-            user = libraryUser(email=email, password=password, username=username)
-            db.session.add(user)
-            db.session.commit()
+            # 정규표현식으로 체크하기!
+            if (
+                usernameCheck(username)
+                and emailCheck(email)
+                and passwordCheck(password)
+            ):
+                password = generate_password_hash(password)
+                user = libraryUser(email=email, password=password, username=username)
+                db.session.add(user)
+                db.session.commit()
 
-            session.clear()
-            session["username"] = user.username
-            session["email"] = user.email
-            return redirect("index")
+                session.clear()
+                session["username"] = user.username
+                session["email"] = user.email
+                return redirect(url_for("index"))
+            else:
+                flash("유효하지 않는 값이 존재합니다.")
 
     return render_template("auth/register.html")
 
