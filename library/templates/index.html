@@ -4,6 +4,20 @@
 {% block content %}
 <h1>Hello World</h1>
 {% for book in books %}
-    {% include 'partials/book_card.html' %}
+<div>
+    <img src="{{book.photo}}" width="110" height="110">
+    <a href="{{ url_for('book.book_detail', book_id=book.id) }}"><span>{{book.book_name}}</span></a>
+    {% block card_content %}
+    <span>
+        {% if rented == -1 %}
+        0
+        {% else %}
+        1
+        {% endif %}
+        권 남음
+    </span>
+    <button type="submit">대여하기</button>
+    {% endblock %}
+</div>
 {% endfor %}
 {% endblock %}

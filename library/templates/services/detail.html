@@ -3,7 +3,8 @@
 
 {% block content %}
 <div>
-    <img src="{% static `book_img/{{id}}.jpg` %}" width="267" height="267">
+    <img src="{{book.photo}}" width="267" height="267">
+    <!-- <div>{{book.photo}}</div>  url이 바뀜... -->
     <div>
         <div>
             <div>책이름</div>

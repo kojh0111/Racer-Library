@@ -16,10 +16,11 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from views import main_view, auth_view
+    from views import main_view, auth_view, book_view
 
     app.register_blueprint(main_view.bp)
     app.register_blueprint(auth_view.bp)
+    app.register_blueprint(book_view.bp)
     app.add_url_rule("/", endpoint="index")
 
     return app
