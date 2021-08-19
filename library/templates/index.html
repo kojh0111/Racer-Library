@@ -20,4 +20,15 @@
     {% endblock %}
 </div>
 {% endfor %}
+<h5>
+    {% if page > 1 %}
+        <a href="?page={{page-1}}">←</a>
+    {% endif %}
+    {% for page in page_range  %}
+        <a href="?page={{page}}">{{page}}</a>
+    {% endfor %}
+    {% if page <  page_count %}
+        <a href="?page={{page+1}}">→</a>
+    {% endif %}
+</h5>
 {% endblock %}
