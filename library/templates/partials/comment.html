@@ -4,7 +4,7 @@
     <div class="mt-2">
         <div>
             <div class="flex">
-                <h5 class="mr-auto font-semibold text-lg">{{c.user_name}}</h5>
+                <h5 class="mr-auto font-semibold text-lg">{{c.user.username}}</h5>
                 {% if c.rating == 1 -%}
                 <div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
                 {%- elif c.rating ==2 -%}

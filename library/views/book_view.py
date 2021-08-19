@@ -84,7 +84,6 @@ def comment(book_id):
         c = bookComment(
             book_id=book_id,
             user_id=session["email"],
-            user_name=session["username"],
             rating=rating,
             content=content,
         )

@@ -48,6 +48,9 @@ class rentalBook(db.Model):
     rental_date = db.Column(db.Date, default=date.today())
     return_date = db.Column(db.Date, default=date.today() + timedelta(days=7))
 
+    book = db.relationship("libraryBook", backref=db.backref("rental"))
+    user = db.relationship("libraryUser", backref=db.backref("rental"))
+
 
 class bookComment(db.Model):
 
@@ -60,18 +63,15 @@ class bookComment(db.Model):
     user_id = db.Column(
         db.String(100), db.ForeignKey("user.email", ondelete="CASCADE"), nullable=False
     )
-    user_name = db.Column(
-        db.String(30),
-        db.ForeignKey("user.username", ondelete="CASCADE"),
-        nullable=False,
-    )
     rating = db.Column(db.Integer, nullable=False)
     content = db.Column(db.Text(), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
-    def __init__(self, rating, content, book_id, user_id, user_name):
+    book = db.relationship("libraryBook", backref=db.backref("comment"))
+    user = db.relationship("libraryUser", backref=db.backref("comment"))
+
+    def __init__(self, rating, content, book_id, user_id):
         self.rating = rating
         self.content = content
         self.book_id = book_id
         self.user_id = user_id
-        self.user_name = user_name
