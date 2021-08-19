@@ -2,33 +2,51 @@
 {% block title %}메인{% endblock %}
 
 {% block content %}
-<h1>Hello World</h1>
-{% for book in books %}
-<div>
-    <img src="{{book.photo}}" width="110" height="110">
-    <a href="{{ url_for('book.book_detail', book_id=book.id) }}"><span>{{book.book_name}}</span></a>
-    {% block card_content %}
-    <span>
-        {% if rented == -1 %}
-        0
-        {% else %}
-        1
+<div class="grid grid-cols-4 grid-rows-2 mx-10 gap-x-4 gap-y-8">    
+    {% for book in books %}
+    <form 
+        action="{{ url_for('book.borrow_book', book_id=book.id) }}" 
+        class="mx-auto p-4 text-center flex flex-col justify-center items-center h-96 w-56 bg-white border border-2 border-blue-400"
+        method="POST">
+        <img class="m-auto" src="{{book.photo}}" width="110" height="110">
+        <a class="h-12" href="{{ url_for('book.book_detail', book_id=book.id) }}"><span>{{book.book_name}}</span></a>
+        <div class="flex mt-4 text-blue-400">
+            <div>&#9733;</div>
+            <div>&#9733;</div>
+            <div>&#9733;</div>
+            <div>&#9733;</div>
+            <div>&#9733;</div>
+        </div>
+        <span class="my-2">
+            {% if book.rented %}
+            0
+            {% else %}
+            1
+            {% endif %}
+            권 남음
+        </span>
+        {% if session["email"] %}
+        <button 
+            class="w-1/2 flex items-center justify-center rounded-md bg-blue-600 text-white"
+            type="submit"
+        >대여하기</button>
         {% endif %}
-        권 남음
-    </span>
-    <button type="submit">대여하기</button>
-    {% endblock %}
+    </form>
+    {% endfor %}
 </div>
-{% endfor %}
-<h5>
+<h5 class="my-8 mx-auto py-4 text-center text-lg">
     {% if page > 1 %}
-        <a href="?page={{page-1}}">←</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?page={{page-1}}">&#8592;</a>
     {% endif %}
     {% for p in page_range  %}
-        <a href="?page={{p}}">{{p}}</a>
+        {% if p==page %}
+        <a class="mx-2 px-3 py-2 text-white bg-indigo-500 rounded-md" href="?page={{p}}">{{p}}</a>
+        {% else%}
+        <a class="mx-2 px-3 py-2" href="?page={{p}}">{{p}}</a>
+        {% endif %}
     {% endfor %}
     {% if page <  page_count %}
-        <a href="?page={{page+1}}">→</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?page={{page+1}}">&#8594;</a>
     {% endif %}
 </h5>
 {% endblock %}

@@ -8,16 +8,14 @@
     <title>{% block title %}{% endblock %} | 레이서 도서관</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
 </head>
 
 <body>
     {% block nav %}
     {% include "partials/nav.html" %}
     {% endblock %}
-    <section class="content">
-        <header>
-            {% block header %}{% endblock %}
-        </header>
+    <section class="content mt-6">
         {% block content %}{% endblock %}
     </section>
 </body>

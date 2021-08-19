@@ -3,14 +3,12 @@
 
 {% block nav %}{% endblock %}
 
-{% block header %}{% endblock %}
-
 {% block content %}
 <form action="{{ url_for('auth.register') }}" method="post">
-    <input type="text" name="username" id="username" />
-    <input type="email" name="email" id="email" />
-    <input type="password" name="password" id="password" />
-    <input type="password" name="passwordcheck" id="passwordcheck" />
+    <input type="text" name="username" id="username" placeholder="이름" />
+    <input type="email" name="email" id="email" placeholder="이메일" />
+    <input type="password" name="password" id="password" placeholder="비밀번호" />
+    <input type="password" name="passwordcheck" id="passwordcheck" placeholder="비밀번호 확인" />
     <button type="submit">Sign Up</button>
 </form>
 {% endblock %}
