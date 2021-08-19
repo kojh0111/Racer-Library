@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}로그인{% endblock %}
 
-{% block nav %}{% endblock %}
-
 {% block content %}
-<form action="{{ url_for('auth.login') }}" method="post">
-    <input type="email" name="email" id="email" placeholder="이메일" />
-    <input type="password" name="password" id="password" placeholder="비밀번호" />
-    <button type="submit">Sign In</button>
-</form>
+<div class="flex flex-col justify-center item-center mt-20">
+    <form action="{{ url_for('auth.login') }}" method="post"
+        class="flex flex-col justify-center item-center mx-auto">
+        <input class="w-96 mb-8 px-6 py-4" type="email" name="email" id="email" placeholder="이메일" />
+        <input class="w-96 mb-8 px-6 py-4" type="password" name="password" id="password" placeholder="비밀번호" />
+        <button class="w-96 mb-8 px-6 py-4 font-semibold rounded-md bg-blue-600 text-white" type="submit">Sign In</button>
+    </form>
+    <div class="w-96 h-1 mt-12 mx-auto bg-gradient-to-r from-indigo-400 via-blue-500 to-green-500"></div>
+    <div class="flex flex-col mt-20 text-center">
+        <span>아직 회원이 아니라면?</span>
+        <a 
+            href="{{ url_for('auth.register') }}" 
+            class="w-28 mx-auto my-4 px-6 py-4 font-semibold rounded-md bg-green-500 text-white">
+            회원가입
+        </a>
+    </div>
+</div>
 {% endblock %}

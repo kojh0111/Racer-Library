@@ -43,7 +43,25 @@ def book_return():
     books = rentalBook.query.filter(
         and_(
             rentalBook.user_id == session["email"],
-            rentalBook.return_date >= date.today(),
+            rentalBook.return_date > date.today(),
         )
     ).all()
     return render_template("services/return.html", books=books)
+
+
+@bp.route("/<int:book_id>/return", methods=["POST"])
+def return_book(book_id):
+    libBook = libraryBook.query.filter(libraryBook.id == book_id).first()
+    if libBook.rented:
+        libBook.rented = False
+        book = (
+            rentalBook.query.filter(rentalBook.book_id == book_id)
+            .order_by(rentalBook.rental_date.desc())
+            .first()
+        )
+        book.return_date = date.today()
+        db.session.commit()
+    else:
+        flash("잘못된 접근 입니다.")
+
+    return redirect(url_for("book.book_return"))

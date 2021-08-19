@@ -2,31 +2,33 @@
 {% block title %}{{book.book_name}}{% endblock %}
 
 {% block content %}
-<div>
-    <img src="../static/book_img/{{book.id}}.jpg" width="267" height="267">
-    <!-- <div>{{book.photo}}</div>  url이 바뀜... -->
-    <div>
-        <div>
-            <div>책이름</div>
-            <div>출판사</div>
-            <div>저자</div>
-            <div>출간일</div>
-            <div>페이지 수</div>
-            <div>ISBN 코드</div>
-        </div>
-        <div>
-            <div>{{book.book_name}}</div>
-            <div>{{book.publisher}}</div>
-            <div>{{book.author}}</div>
-            <div>{{book.publication_date}}</div>
-            <div>{{book.pages}}</div>
-            <div>{{book.isbn}}</div>
+<div class="flex flex-col mx-24 my-12 p-24 bg-white">
+    <div class="flex justify-between items-center">
+        <img src="../static/book_img/{{book.id}}.jpg" width="267" height="267">
+        <!-- <div>{{book.photo}}</div>  url이 바뀜... -->
+        <div class="flex w-2/3 ml-auto">
+            <div class="px-6">
+                <div class="font-semibold py-2">책이름</div>
+                <div class="font-semibold py-2">출판사</div>
+                <div class="font-semibold py-2">저자</div>
+                <div class="font-semibold py-2">출간일</div>
+                <div class="font-semibold py-2">페이지 수</div>
+                <div class="font-semibold py-2">ISBN 코드</div>
+            </div>
+            <div class="px-6">
+                <div class="pr-10 py-2">{{book.book_name}}</div>
+                <div class="pr-10 py-2">{{book.publisher}}</div>
+                <div class="pr-10 py-2">{{book.author}}</div>
+                <div class="pr-10 py-2">{{book.publication_date}}</div>
+                <div class="pr-10 py-2">{{book.pages}}</div>
+                <div class="pr-10 py-2">{{book.isbn}}</div>
+            </div>
         </div>
     </div>
+    <h3 class="mt-12">책 소개</h3>
+    <div class="p-6 h-64">
+        {{book.description}}
+    </div>
+    {% include "partials/comment.html" %}
 </div>
-<h3>책 소개</h3>
-<div>
-    {{book.description}}
-</div>
-{% include "partials/comment.html" %}
 {% endblock %}

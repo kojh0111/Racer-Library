@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}회원가입{% endblock %}
 
-{% block nav %}{% endblock %}
-
 {% block content %}
-<form action="{{ url_for('auth.register') }}" method="post">
-    <input type="text" name="username" id="username" placeholder="이름" />
-    <input type="email" name="email" id="email" placeholder="이메일" />
-    <input type="password" name="password" id="password" placeholder="비밀번호" />
-    <input type="password" name="passwordcheck" id="passwordcheck" placeholder="비밀번호 확인" />
-    <button type="submit">Sign Up</button>
+<form action="{{ url_for('auth.register') }}" method="post"
+    class="flex flex-col justify-center item-center mt-20">
+    <input class="w-96 mb-8 px-6 py-4 mx-auto" type="text" name="username" id="username" placeholder="이름" />
+    <input class="w-96 mb-8 px-6 py-4 mx-auto" type="email" name="email" id="email" placeholder="이메일" />
+    <input class="w-96 mb-8 px-6 py-4 mx-auto" type="password" name="password" id="password" placeholder="비밀번호" />
+    <input class="w-96 mb-8 px-6 py-4 mx-auto" type="password" name="passwordcheck" id="passwordcheck" placeholder="비밀번호 확인" />
+    <button class="w-96 mb-8 px-6 py-4 mx-auto font-semibold rounded-md bg-blue-600 text-white" type="submit">Sign Up</button>
 </form>
 {% endblock %}

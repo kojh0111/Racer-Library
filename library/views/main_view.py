@@ -26,7 +26,7 @@ def home():
             .first()
         )
         try:
-            if borBook.return_date < date.today():
+            if borBook.return_date <= date.today():
                 libBook.rented = False
                 db.session.commit()
         except AttributeError:

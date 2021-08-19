@@ -1,4 +1,4 @@
-<h3>댓글</h3>
+<h3 class="mt-12">댓글</h3>
 <div>
     {% for c in comment %}
     <div>
@@ -16,15 +16,19 @@
     </div>
     {% endfor %}
     <form action="#" method="post">
-        <textarea name="comment" id="" cols="30" rows="10"></textarea>
-        <div>
-            <span>평가하기</span>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
+        <textarea name="comment" id="comment" rows="2" placeholder="댓글달기" class="w-full p-4 mt-4 mx-auto"></textarea>
+        <div class="flex justify-end">
+            <div>
+                <span>평가하기</span>
+                <div class="flex">
+                    <div class="pr-2">&#9733;</div>
+                    <div class="pr-2">&#9733;</div>
+                    <div class="pr-2">&#9733;</div>
+                    <div class="pr-2">&#9733;</div>
+                    <div class="pr-2">&#9733;</div>
+                </div>
+            </div>
+            <input type="button" value="작성하기" class="py-3 px-8 ml-6 font-semibold rounded-md bg-blue-600 text-white">
         </div>
-        <input type="button" value="작성하기">
     </form>
 </div>
