@@ -1,5 +1,5 @@
 from db_connect import db
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 
 class libraryUser(db.Model):
@@ -60,10 +60,18 @@ class bookComment(db.Model):
     user_id = db.Column(
         db.String(100), db.ForeignKey("user.email", ondelete="CASCADE"), nullable=False
     )
+    user_name = db.Column(
+        db.String(30),
+        db.ForeignKey("user.username", ondelete="CASCADE"),
+        nullable=False,
+    )
     rating = db.Column(db.Integer, nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
-    def __init__(self, rating, content):
+    def __init__(self, rating, content, book_id, user_id, user_name):
         self.rating = rating
         self.content = content
+        self.book_id = book_id
+        self.user_id = user_id
+        self.user_name = user_name

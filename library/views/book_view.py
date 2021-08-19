@@ -1,6 +1,6 @@
 from datetime import date
-from models import libraryBook, rentalBook, db
-from flask import Blueprint, render_template, redirect, url_for, session, flash
+from models import libraryBook, rentalBook, bookComment, db
+from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 from sqlalchemy import and_
 
 bp = Blueprint("book", __name__, url_prefix="/book")
@@ -9,7 +9,12 @@ bp = Blueprint("book", __name__, url_prefix="/book")
 @bp.route("/<int:book_id>")
 def book_detail(book_id):
     book = libraryBook.query.filter(libraryBook.id == book_id).first()
-    return render_template("services/detail.html", book=book)
+    comments = (
+        bookComment.query.filter(bookComment.book_id == book_id)
+        .order_by(bookComment.created_at.desc())
+        .all()
+    )
+    return render_template("services/detail.html", book=book, comments=comments)
 
 
 @bp.route("/<int:book_id>/borrow", methods=["POST"])
@@ -65,3 +70,24 @@ def return_book(book_id):
         flash("잘못된 접근 입니다.")
 
     return redirect(url_for("book.book_return"))
+
+
+@bp.route("/<int:book_id>/comment", methods=["POST"])
+def comment(book_id):
+    rating = request.form["stars"]
+    content = request.form["comment"]
+    if rating == "0":
+        flash("평가하기를 놓치셨군요. 평가하기를 해주세요.")
+    elif not content:
+        flash("댓글에 내용이 필요합니다.")
+    else:
+        c = bookComment(
+            book_id=book_id,
+            user_id=session["email"],
+            user_name=session["username"],
+            rating=rating,
+            content=content,
+        )
+        db.session.add(c)
+        db.session.commit()
+    return redirect(url_for("book.book_detail", book_id=book_id))

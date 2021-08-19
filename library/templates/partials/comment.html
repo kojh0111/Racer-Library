@@ -1,34 +1,53 @@
-<h3 class="mt-12">댓글</h3>
+<h3 class="mt-12 mb-4 font-semibold text-2xl">댓글</h3>
 <div>
-    {% for c in comment %}
-    <div>
+    {% for c in comments %}
+    <div class="mt-2">
         <div>
-            <h5>{{c.user_id}}</h5>
-            <span>{{c.comment}}</span>
+            <div class="flex">
+                <h5 class="mr-auto font-semibold text-lg">{{c.user_name}}</h5>
+                {% if c.rating == 1 -%}
+                <div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
+                {%- elif c.rating ==2 -%}
+                <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
+                {%- elif c.rating ==3 -%}
+                <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
+                {%- elif c.rating ==4 -%}
+                <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div>
+                {%- else -%}
+                <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div>
+                {%- endif %}
+            </div>
         </div>
-        <div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-            <div>&#9733;</div>
-        </div>
+        <span>{{c.content}}</span>
     </div>
     {% endfor %}
-    <form action="#" method="post">
+    {% if not comments %}
+        <div class="my-4">아직 댓글이 없습니다. 댓글을 달아주세요.</div>
+    {% endif %}
+    {% if session["email"] %}
+    <form action="{{ url_for('book.comment', book_id=book.id) }}" method="post">
         <textarea name="comment" id="comment" rows="2" placeholder="댓글달기" class="w-full p-4 mt-4 mx-auto"></textarea>
         <div class="flex justify-end">
-            <div>
+            <div class="flex flex-col">
                 <span>평가하기</span>
-                <div class="flex">
+                <input type="range" name="stars" id="stars" min="0" max="5" value="0" list="numbers">
+                <datalist id="numbers">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                 </datalist>
+                <!-- <div class="flex">
                     <div class="pr-2">&#9733;</div>
                     <div class="pr-2">&#9733;</div>
                     <div class="pr-2">&#9733;</div>
                     <div class="pr-2">&#9733;</div>
                     <div class="pr-2">&#9733;</div>
-                </div>
+                </div> -->
             </div>
-            <input type="button" value="작성하기" class="py-3 px-8 ml-6 font-semibold rounded-md bg-blue-600 text-white">
+            <input type="submit" value="작성하기" class="py-3 px-8 ml-6 font-semibold rounded-md bg-blue-600 text-white">
         </div>
     </form>
+    {% endif %}
 </div>
