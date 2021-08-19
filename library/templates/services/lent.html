@@ -5,8 +5,8 @@
 <div class="grid grid-cols-4 grid-rows-2 mx-10 gap-x-4 gap-y-8">    
     {% for book in books %}
     <div class="mx-auto p-4 text-center flex flex-col justify-center items-center h-96 w-56 bg-white border border-2 border-blue-400">
-        <img class="m-auto" src="{{book.photo}}" width="110" height="110">
-        <a class="h-12" href="{{ url_for('book.book_detail', book_id=book.id) }}"><span>{{book.book_name}}</span></a>
+        <img class="m-auto" src="../static/book_img/{{book.book_id}}.jpg" width="110" height="110">
+        <a class="h-12" href="{{ url_for('book.book_detail', book_id=book.book_id) }}"><span>{{book.book_name}}</span></a>
         <div class="flex mt-4 text-blue-400">
             <div>&#9733;</div>
             <div>&#9733;</div>
@@ -18,5 +18,8 @@
         <span>&#8764; {{book.return_date}}</span>
     </div>
     {% endfor %}
+    {% if not books %}
+    <h1>아직 빌려보신 책이 없습니다.</h1>
+    {% endif %}
 </div>
 {% endblock %}
