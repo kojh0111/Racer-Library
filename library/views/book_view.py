@@ -1,5 +1,7 @@
+from datetime import date
 from models import libraryBook, rentalBook, db
 from flask import Blueprint, render_template, redirect, url_for, session, flash
+from sqlalchemy import and_
 
 bp = Blueprint("book", __name__, url_prefix="/book")
 
@@ -17,17 +19,31 @@ def borrow_book(book_id):
         libBook.rented = True
         book = rentalBook(book_id=book_id, user_id=session["email"])
         db.session.add(book)
+        db.session.commit()
     else:
         flash("남은 책이 없습니다.")
-        db.session.commit()
+        book = rentalBook.query.filter(book_id == book_id).first()
+    print(type(book.rental_date))
     return redirect(url_for("index"))
 
 
 @bp.route("/lent")
 def book_lent():
-    return render_template("services/lent.html")
+    books = rentalBook.query.filter(
+        and_(
+            rentalBook.user_id == session["email"],
+            rentalBook.return_date <= date.today(),
+        )
+    ).all()
+    return render_template("services/lent.html", books=books)
 
 
 @bp.route("/return")
 def book_return():
-    return render_template("services/return.html")
+    books = rentalBook.query.filter(
+        and_(
+            rentalBook.user_id == session["email"],
+            rentalBook.return_date >= date.today(),
+        )
+    ).all()
+    return render_template("services/return.html", books=books)
