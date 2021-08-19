@@ -17,11 +17,7 @@ def init_book_db():
                 reader = csv.DictReader(books)
                 for r in reader:
                     book_id = r["book_id"]
-                    try:
-                        photo = f"./static/book_img/{book_id}.png"
-                        open(photo)
-                    except (FileNotFoundError, IOError):
-                        photo = f"./static/book_img/{book_id}.jpg"
+                    photo = f"./static/book_img/{book_id}.jpg"
                     book = libraryBook(
                         id=book_id,
                         book_name=r["book_name"],
