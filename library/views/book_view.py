@@ -3,6 +3,7 @@ from models import libraryBook, rentalBook, bookComment, db
 from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 from sqlalchemy import and_
 from views.main_view import avg_rating
+from views.auth_view import login_required
 
 bp = Blueprint("book", __name__, url_prefix="/book")
 
@@ -34,6 +35,7 @@ def borrow_book(book_id):
 
 
 @bp.route("/lent")
+@login_required
 def book_lent():
     books = rentalBook.query.filter(
         and_(
@@ -45,6 +47,7 @@ def book_lent():
 
 
 @bp.route("/return")
+@login_required
 def book_return():
     books = rentalBook.query.filter(
         and_(
@@ -56,6 +59,7 @@ def book_return():
 
 
 @bp.route("/<int:book_id>/return", methods=["POST"])
+@login_required
 def return_book(book_id):
     libBook = libraryBook.query.filter(libraryBook.id == book_id).first()
     if libBook.rented:
@@ -74,6 +78,7 @@ def return_book(book_id):
 
 
 @bp.route("/<int:book_id>/comment", methods=["POST"])
+@login_required
 def comment(book_id):
     rating = request.form["stars"]
     content = request.form["comment"]

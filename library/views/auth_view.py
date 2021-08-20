@@ -1,7 +1,17 @@
 from models import libraryUser, db
-from flask import Blueprint, render_template, redirect, url_for, request, session, flash
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    url_for,
+    request,
+    session,
+    flash,
+    g,
+)
 from werkzeug.security import generate_password_hash, check_password_hash
 from validator import passwordCheck, emailCheck, usernameCheck
+import functools
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -22,6 +32,10 @@ def login():
         session.clear()
         session["username"] = user.username
         session["email"] = user.email
+        return redirect(url_for("index"))
+
+    if g.user:
+        flash("잘못된 접근입니다.")
         return redirect(url_for("index"))
 
     return render_template("auth/login.html")
@@ -60,6 +74,10 @@ def register():
             else:
                 flash("유효하지 않는 값이 존재합니다.")
 
+    if g.user:
+        flash("잘못된 접근입니다.")
+        return redirect(url_for("index"))
+
     return render_template("auth/register.html")
 
 
@@ -67,3 +85,22 @@ def register():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get("email")
+    if user_id:
+        g.user = libraryUser.query.filter(libraryUser.email == user_id).first()
+    else:
+        g.user = None
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("index"))
+        return view(**kwargs)
+
+    return wrapped_view
