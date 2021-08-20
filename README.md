@@ -17,8 +17,8 @@
 
 <br>
 
-- [ ] **로그인**
-    - [ ] id, password는 필수 입력 사항(id는 email형식만 입력 받음 & password는 8자리 이상)
+- [x] **로그인**
+    - [x] id, password는 필수 입력 사항(id는 email형식만 입력 받음 & password는 8자리 이상)
     - [x] 유저로부터 id, password 정보를 입력받아 로그인
     - [x] 로그인한 유저에 대해 session으로 관리
 
