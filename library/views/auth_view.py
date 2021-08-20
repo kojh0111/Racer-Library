@@ -22,12 +22,48 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         user = libraryUser.query.filter(libraryUser.email == email).first()
+        if not (email and password):
+            errormsg = "빈 칸이 있습니다. 모두 입력해주세요."
+            return render_template(
+                "auth/login.html",
+                errormsg=errormsg,
+                email=email,
+                password=password,
+            )
+
+        if not emailCheck(email):
+            errormsg = "이메일 형식이 아닙니다."
+            return render_template(
+                "auth/login.html",
+                errormsg=errormsg,
+                email=email,
+                password=password,
+            )
+        elif len(password) < 8:
+            errormsg = "비밀번호가 너무 짧습니다. 다시 확인해주세요."
+            return render_template(
+                "auth/login.html",
+                errormsg=errormsg,
+                email=email,
+                password=password,
+            )
+
         if not user:
-            flash("아이디 또는 비밀번호가 틀립니다. 다시 한 번 확인해주세요.")
-            return redirect(url_for("auth.login"))
+            errormsg = "아이디 또는 비밀번호가 틀립니다. 다시 한 번 확인해주세요."
+            return render_template(
+                "auth/login.html",
+                errormsg=errormsg,
+                email=email,
+                password=password,
+            )
         elif not check_password_hash(user.password, password):
-            flash("비밀번호가 일치하지 않습니다.")
-            return redirect(url_for("auth.login"))
+            errormsg = "비밀번호가 일치하지 않습니다."
+            return render_template(
+                "auth/login.html",
+                errormsg=errormsg,
+                email=email,
+                password=password,
+            )
 
         session.clear()
         session["username"] = user.username
@@ -50,11 +86,25 @@ def register():
         password2 = request.form["passwordcheck"]
         user = libraryUser.query.filter(libraryUser.email == email).first()
         if user:
-            flash("이미 존재하는 아이디 입니다.")
-            return redirect(url_for("auth.register"))
+            errormsg = "이미 존재하는 아이디 입니다."
+            return render_template(
+                "auth/register.html",
+                errormsg=errormsg,
+                username=username,
+                email=email,
+                password=password,
+                password2=password2,
+            )
         elif password != password2:
-            flash("비밀번호가 일치하지 않습니다.")
-            return redirect(url_for("auth.register"))
+            errormsg = "비밀번호가 일치하지 않습니다."
+            return render_template(
+                "auth/register.html",
+                errormsg=errormsg,
+                username=username,
+                email=email,
+                password=password,
+                password2=password2,
+            )
         else:
             # 정규표현식으로 체크하기!
             if (

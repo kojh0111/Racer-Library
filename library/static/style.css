@@ -45,3 +45,7 @@ body {
     left: 200px;
     animation: alertFade 3s ease-in-out forwards;
 }
+
+#loginerr {
+    animation: alertFade 3s ease-in-out forwards;
+}
