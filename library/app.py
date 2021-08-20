@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from db_connect import db
 import config
@@ -22,6 +22,10 @@ def create_app():
     app.register_blueprint(auth_view.bp)
     app.register_blueprint(book_view.bp)
     app.add_url_rule("/", endpoint="index")
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template("404.html"), 404
 
     return app
 
