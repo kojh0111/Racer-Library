@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from models import libraryBook, rentalBook, bookComment, db
 from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 from sqlalchemy import and_
@@ -87,6 +87,7 @@ def comment(book_id):
             user_id=session["email"],
             rating=rating,
             content=content,
+            created_at=datetime.utcnow(),
         )
         db.session.add(c)
         db.session.commit()

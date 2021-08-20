@@ -70,8 +70,9 @@ class bookComment(db.Model):
     book = db.relationship("libraryBook", backref=db.backref("comment"))
     user = db.relationship("libraryUser", backref=db.backref("comment"))
 
-    def __init__(self, rating, content, book_id, user_id):
+    def __init__(self, rating, content, book_id, user_id, created_at):
         self.rating = rating
         self.content = content
         self.book_id = book_id
         self.user_id = user_id
+        self.created_at = created_at
