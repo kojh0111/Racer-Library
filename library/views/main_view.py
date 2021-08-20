@@ -1,9 +1,19 @@
 from datetime import date
-from models import libraryBook, rentalBook, db
+from models import libraryBook, rentalBook, bookComment, db
 from flask import Blueprint, redirect, render_template, request, url_for
 from math import ceil
 
 bp = Blueprint("home", __name__, url_prefix="/")
+
+
+def avg_rating(book_id):
+    all_rating = bookComment.query.filter(bookComment.book_id == book_id).all()
+    sum_rating = 0
+    if len(all_rating) > 0:
+        for rate in all_rating:
+            sum_rating += rate.rating
+        return round(sum_rating / len(all_rating))
+    return 0
 
 
 @bp.route("/")
@@ -40,4 +50,5 @@ def home():
         books=books,
         page_count=page_count,
         page_range=page_range,
+        avg_rating=avg_rating,
     )

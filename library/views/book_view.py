@@ -2,6 +2,7 @@ from datetime import date
 from models import libraryBook, rentalBook, bookComment, db
 from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 from sqlalchemy import and_
+from views.main_view import avg_rating
 
 bp = Blueprint("book", __name__, url_prefix="/book")
 
@@ -40,7 +41,7 @@ def book_lent():
             rentalBook.return_date <= date.today(),
         )
     ).all()
-    return render_template("services/lent.html", books=books)
+    return render_template("services/lent.html", books=books, avg_rating=avg_rating)
 
 
 @bp.route("/return")
@@ -51,7 +52,7 @@ def book_return():
             rentalBook.return_date > date.today(),
         )
     ).all()
-    return render_template("services/return.html", books=books)
+    return render_template("services/return.html", books=books, avg_rating=avg_rating)
 
 
 @bp.route("/<int:book_id>/return", methods=["POST"])
