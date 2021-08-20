@@ -122,7 +122,15 @@ def register():
                 session["email"] = user.email
                 return redirect(url_for("index"))
             else:
-                flash("유효하지 않는 값이 존재합니다.")
+                errormsg = "유효하지 않는 값이 존재합니다."
+                return render_template(
+                    "auth/register.html",
+                    errormsg=errormsg,
+                    username=username,
+                    email=email,
+                    password=password,
+                    password2=password2,
+                )
 
     if g.user:
         flash("잘못된 접근입니다.")
