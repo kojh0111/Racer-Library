@@ -11,15 +11,15 @@
         <img class="m-auto" src="../static/book_img/{{book.book_id}}.jpg" width="110" height="110">
         <a class="h-12" href="{{ url_for('book.book_detail', book_id=book.book_id) }}"><span>{{book.book.book_name}}</span></a>
         <div class="flex mt-4">
-            {% if avg_rating(book.id) == 0 -%}
+            {% if avg_rating(book.book_id) == 0 -%}
             <div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) == 1 -%}
+            {%- elif avg_rating(book.book_id) == 1 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==2 -%}
+            {%- elif avg_rating(book.book_id) ==2 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==3 -%}
+            {%- elif avg_rating(book.book_id) ==3 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==4 -%}
+            {%- elif avg_rating(book.book_id) ==4 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div>
             {%- else -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div>
