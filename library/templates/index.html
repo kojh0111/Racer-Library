@@ -6,7 +6,7 @@
     {% for book in books %}
     <form 
         action="{{ url_for('book.borrow_book', book_id=book.id) }}" 
-        class="mx-auto p-4 text-center flex flex-col justify-center items-center h-96 w-56 bg-white border border-2 border-blue-400"
+        class="mx-auto p-4 text-center flex flex-col justify-center items-center h-96 w-full bg-white shadow hover:shadow-lg"
         method="POST">
         <img class="m-auto" src="{{book.photo}}" width="110" height="110">
         <a class="h-12" href="{{ url_for('book.book_detail', book_id=book.id) }}"><span>{{book.book_name}}</span></a>
@@ -35,11 +35,11 @@
         </span>
         {% if session["email"] and not book.rented %}
         <button 
-            class="w-1/2 flex items-center justify-center rounded-md bg-blue-600 text-white"
+            class="w-1/2 py-1 flex items-center justify-center rounded-md bg-blue-600 text-white"
             type="submit"
         >대여하기</button>
         {% else %}
-        <div class="w-1/2 flex items-center justify-center rounded-md bg-blue-300 text-white">대여불가</div>
+        <div class="w-1/2 py-1 flex items-center justify-center rounded-md bg-blue-300 text-white">대여불가</div>
         {% endif %}
     </form>
     {% endfor %}
