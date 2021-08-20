@@ -15,11 +15,11 @@
             <div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
             {%- elif avg_rating(book.id) == 1 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==2 -%}
+            {%- elif avg_rating(book.id) == 2 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==3 -%}
+            {%- elif avg_rating(book.id) == 3 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div><div class="text-blue-300">&#9733;</div>
-            {%- elif avg_rating(book.id) ==4 -%}
+            {%- elif avg_rating(book.id) == 4 -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-300">&#9733;</div>
             {%- else -%}
             <div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div><div class="text-blue-700">&#9733;</div>
@@ -33,11 +33,13 @@
             {% endif %}
             권 남음
         </span>
-        {% if session["email"] %}
+        {% if session["email"] and not book.rented %}
         <button 
             class="w-1/2 flex items-center justify-center rounded-md bg-blue-600 text-white"
             type="submit"
         >대여하기</button>
+        {% else %}
+        <div class="w-1/2 flex items-center justify-center rounded-md bg-blue-300 text-white">대여불가</div>
         {% endif %}
     </form>
     {% endfor %}
