@@ -2,6 +2,7 @@
 {% block title %}메인{% endblock %}
 
 {% block content %}
+{% include "partials/search.html" %}
 <div class="grid grid-cols-4 grid-rows-2 mx-10 gap-x-4 gap-y-8">    
     {% for book in books %}
     <form 
@@ -46,17 +47,17 @@
 </div>
 <h5 class="my-8 mx-auto py-4 text-center text-lg">
     {% if page > 1 %}
-        <a class="mx-2 px-3 py-2 text-xl" href="?page={{page-1}}">&#8592;</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page-1}}">&#8592;</a>
     {% endif %}
     {% for p in page_range  %}
         {% if p==page %}
-        <a class="mx-2 px-3 py-2 text-white bg-indigo-500 rounded-md" href="?page={{p}}">{{p}}</a>
+        <a class="mx-2 px-3 py-2 text-white bg-indigo-500 rounded-md" href="?{{searchquery}}page={{p}}">{{p}}</a>
         {% else%}
-        <a class="mx-2 px-3 py-2" href="?page={{p}}">{{p}}</a>
+        <a class="mx-2 px-3 py-2" href="?{{searchquery}}page={{p}}">{{p}}</a>
         {% endif %}
     {% endfor %}
     {% if page <  page_count %}
-        <a class="mx-2 px-3 py-2 text-xl" href="?page={{page+1}}">&#8594;</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page+1}}">&#8594;</a>
     {% endif %}
 </h5>
 {% endblock %}

@@ -19,15 +19,24 @@ def avg_rating(book_id):
 @bp.route("/")
 def home():
     page = request.args.get("page", 1)
+    search = request.args.get("search", "")
+    searchquery = f"search={search}&" if search else ""
     try:
         page = int(page)
     except ValueError:
         return redirect(url_for("index"))
+
     page_size = 8
     limit = page * page_size
     offset = limit - page_size
-    page_count = ceil(libraryBook.query.count() / page_size)
-    books = libraryBook.query.order_by(libraryBook.id.asc())[offset:limit]
+
+    books = libraryBook.query.filter(
+        libraryBook.book_name.like(f"%{search}%")
+    ).order_by(libraryBook.id.asc())
+
+    page_count = ceil(books.count() / page_size)
+    books = books[offset:limit]
+
     for book in books:
         libBook = libraryBook.query.filter(libraryBook.id == book.id).first()
         borBook = (
@@ -41,9 +50,12 @@ def home():
                 db.session.commit()
         except AttributeError:
             continue
+
     page_range = range(1, page_count + 1)
+
     if page < 1 or page > page_count:
         return redirect(url_for("index"))
+
     return render_template(
         "index.html",
         page=page,
@@ -51,4 +63,6 @@ def home():
         page_count=page_count,
         page_range=page_range,
         avg_rating=avg_rating,
+        search=search,
+        searchquery=searchquery,
     )

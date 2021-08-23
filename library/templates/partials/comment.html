@@ -25,9 +25,9 @@
     {% if not comments %}
         <div class="my-4">아직 댓글이 없습니다. 댓글을 달아주세요.</div>
     {% endif %}
-    {% if session["email"] %}
+    {% if g.user %}
     <form action="{{ url_for('book.comment', book_id=book.id) }}" method="post">
-        <textarea name="comment" id="comment" rows="2" placeholder="댓글달기" class="w-full p-4 mt-4 mx-auto shadow"></textarea>
+        <textarea name="comment" id="comment" rows="4" placeholder="댓글달기" class="w-full p-4 mt-4 mx-auto shadow"></textarea>
         <div class="flex justify-end">
             <div class="flex flex-col">
                 <span class="font-semibold text-gray-700">평가하기</span>
