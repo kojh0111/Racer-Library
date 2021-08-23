@@ -1,6 +1,7 @@
 <form class="relative mx-10 mb-8" action="{{ url_for('index') }}" method="get">
+    <i class="fa fa-search fa-2x absolute mx-3 my-2" aria-hidden="true"></i>
     <input 
-        class="pl-10 pr-4 py-3 w-full shadow-inner border-0 rounded focus:outline-none focus:border-transparent" 
-        type="text" name="search" id="search" value="{{ search }}" />
-    <input class="absolute right-2 px-2 py-1 mt-2 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white" type="submit" value="책 찾기">
+        class="pl-16 pr-24 py-3 w-full shadow-inner border-0 rounded-full focus:outline-none focus:border-transparent" 
+        type="text" name="search" id="search" value="{{ search }}" placeholder="검색어를 입력해 주세요." />
+    <input class="right-2 px-4 py-3 mt-2 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white hidden" type="submit" value="책 찾기">
 </form>

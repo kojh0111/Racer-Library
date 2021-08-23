@@ -47,7 +47,7 @@
 </div>
 <h5 class="my-8 mx-auto py-4 text-center text-lg">
     {% if page > 1 %}
-        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page-1}}">&#8592;</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page-1}}"><i class="fas fa-chevron-left"></i></a>
     {% endif %}
     {% for p in page_range  %}
         {% if p==page %}
@@ -57,7 +57,7 @@
         {% endif %}
     {% endfor %}
     {% if page <  page_count %}
-        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page+1}}">&#8594;</a>
+        <a class="mx-2 px-3 py-2 text-xl" href="?{{searchquery}}page={{page+1}}"><i class="fas fa-chevron-right"></i></a>
     {% endif %}
 </h5>
 {% endblock %}
