@@ -34,7 +34,8 @@ def home():
         libraryBook.book_name.like(f"%{search}%")
     ).order_by(libraryBook.id.asc())
 
-    page_count = ceil(books.count() / page_size)
+    book_count = books.count()
+    page_count = ceil(book_count / page_size)
     books = books[offset:limit]
 
     for book in books:
@@ -47,9 +48,10 @@ def home():
         try:
             if borBook.return_date <= date.today():
                 libBook.rented = False
-                db.session.commit()
         except AttributeError:
             continue
+        else:
+            db.session.commit()
 
     page_range = range(1, page_count + 1)
 
@@ -60,6 +62,7 @@ def home():
         "index.html",
         page=page,
         books=books,
+        book_count=book_count,
         page_count=page_count,
         page_range=page_range,
         avg_rating=avg_rating,
