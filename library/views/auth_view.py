@@ -8,18 +8,16 @@ from flask import (
     session,
     flash,
     g,
-    make_response,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from validator import passwordCheck, emailCheck, usernameCheck
 import functools
-from flask_restful import Resource, reqparse
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-@bp.route("/login", methods=["GET", "POST"])
-def login():
+@bp.route("/login", methods=["POST"])
+def post_login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -54,6 +52,9 @@ def login():
             password=password,
         )
 
+
+@bp.route("/login")
+def login():
     if g.user:
         flash("잘못된 접근입니다.")
         return redirect(url_for("index"))
@@ -61,116 +62,55 @@ def login():
     return render_template("auth/login.html")
 
 
-parser = reqparse.RequestParser()
+@bp.route("/register", methods=["POST"])
+def post_register():
+    username = request.form["username"]
+    email = request.form["email"]
+    password = request.form["password"]
+    password2 = request.form["passwordcheck"]
+    user = libraryUser.query.filter(libraryUser.email == email).first()
+    if not usernameCheck(username):
+        errormsg = "이름을 입력해 주세요."
+    elif not emailCheck(email):
+        errormsg = "이메일 형식이 아닙니다."
+    elif user:
+        errormsg = "이미 존재하는 아이디 입니다."
+    elif not passwordCheck(password):
+        errormsg = "비밀번호가 조건에 일치하지 않습니다."
+    elif password != password2:
+        errormsg = "비밀번호가 일치하지 않습니다."
+    else:
+        # 정규표현식으로 체크하기!
+        if usernameCheck(username) and emailCheck(email) and passwordCheck(password):
+            password = generate_password_hash(password)
+            user = libraryUser(email=email, password=password, username=username)
+            db.session.add(user)
+            db.session.commit()
 
-
-class Register(Resource):
-    def get(self):
-        if g.user:
-            flash("잘못된 접근입니다.")
+            session.clear()
+            session["username"] = user.username
+            session["email"] = user.email
             return redirect(url_for("index"))
-
-        return make_response(render_template("auth/register.html"), 200)
-
-    def post(self):
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-        password2 = request.form["passwordcheck"]
-        user = libraryUser.query.filter(libraryUser.email == email).first()
-        if not usernameCheck(username):
-            errormsg = "이름을 입력해 주세요."
-        elif not emailCheck(email):
-            errormsg = "이메일 형식이 아닙니다."
-        elif user:
-            errormsg = "이미 존재하는 아이디 입니다."
-        elif not passwordCheck(password):
-            errormsg = "비밀번호가 조건에 일치하지 않습니다."
-        elif password != password2:
-            errormsg = "비밀번호가 일치하지 않습니다."
         else:
-            # 정규표현식으로 체크하기!
-            if (
-                usernameCheck(username)
-                and emailCheck(email)
-                and passwordCheck(password)
-            ):
-                password = generate_password_hash(password)
-                user = libraryUser(email=email, password=password, username=username)
-                db.session.add(user)
-                db.session.commit()
+            errormsg = "유효하지 않는 값이 존재합니다."
 
-                session.clear()
-                session["username"] = user.username
-                session["email"] = user.email
-                return redirect(url_for("index"))
-            else:
-                errormsg = "유효하지 않는 값이 존재합니다."
-
-        return make_response(
-            render_template(
-                "auth/register.html",
-                self.errormsg == errormsg,
-                self.username == username,
-                self.email == email,
-                self.password == password,
-                self.password2 == password2,
-            ),
-            200,
-        )
+    return render_template(
+        "auth/register.html",
+        errormsg=errormsg,
+        username=username,
+        email=email,
+        password=password,
+        password2=password2,
+    )
 
 
-# @bp.route("/register", methods=["GET", "POST"])
-# def register():
-#     if request.method == "POST":
-#         username = request.form["username"]
-#         email = request.form["email"]
-#         password = request.form["password"]
-#         password2 = request.form["passwordcheck"]
-#         user = libraryUser.query.filter(libraryUser.email == email).first()
-#         if not usernameCheck(username):
-#             errormsg = "이름을 입력해 주세요."
-#         elif not emailCheck(email):
-#             errormsg = "이메일 형식이 아닙니다."
-#         elif user:
-#             errormsg = "이미 존재하는 아이디 입니다."
-#         elif not passwordCheck(password):
-#             errormsg = "비밀번호가 조건에 일치하지 않습니다."
-#         elif password != password2:
-#             errormsg = "비밀번호가 일치하지 않습니다."
-#         else:
-#             # 정규표현식으로 체크하기!
-#             if (
-#                 usernameCheck(username)
-#                 and emailCheck(email)
-#                 and passwordCheck(password)
-#             ):
-#                 password = generate_password_hash(password)
-#                 user = libraryUser(email=email, password=password, username=username)
-#                 db.session.add(user)
-#                 db.session.commit()
+@bp.route("/register")
+def register():
+    if g.user:
+        flash("잘못된 접근입니다.")
+        return redirect(url_for("index"))
 
-#                 session.clear()
-#                 session["username"] = user.username
-#                 session["email"] = user.email
-#                 return redirect(url_for("index"))
-#             else:
-#                 errormsg = "유효하지 않는 값이 존재합니다."
-
-#         return render_template(
-#             "auth/register.html",
-#             errormsg=errormsg,
-#             username=username,
-#             email=email,
-#             password=password,
-#             password2=password2,
-#         )
-
-#     if g.user:
-#         flash("잘못된 접근입니다.")
-#         return redirect(url_for("index"))
-
-#     return render_template("auth/register.html")
+    return render_template("auth/register.html")
 
 
 @bp.route("/logout")

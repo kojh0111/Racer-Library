@@ -7,7 +7,7 @@
         <li class="mx-4 font-semibold text-xl"><a href="{{ url_for('auth.logout') }}">로그아웃</a></li>
         {% else %}
         <li class="mx-4 font-semibold text-xl"><a href="{{ url_for('auth.login') }}">로그인</a></li>
-        <li class="mx-4 font-semibold text-xl"><a href="{{ url_for('register') }}">회원가입</a></li>
+        <li class="mx-4 font-semibold text-xl"><a href="{{ url_for('auth.register') }}">회원가입</a></li>
         {% endif %}
     </ul>
 </nav>
