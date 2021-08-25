@@ -18,9 +18,12 @@
     <section class="content mt-6">
         {% block content %}{% endblock %}
     </section>
-    {% for message in get_flashed_messages() %}
-        <div id="alert" class="absolute z-50 px-6 py-4 rounded-md bg-red-500 font-bold text-white">{{ message }}</div>
-    {% endfor %}
+    <div class="absolute z-50 inset-0 flex justify-center item-center">    
+        {% for message in get_flashed_messages() %}
+            <div id="alert" class="inline px-6 py-4 my-auto rounded-md bg-red-500 font-bold text-white">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% block script %}{% endblock %}
 </body>
 
 </html>
