@@ -35,7 +35,7 @@
             {% endif %}
             권 남음
         </span>
-        {% if session["email"] and not book.rented %}
+        {% if g.user and not book.rented %}
         <button 
             class="w-1/2 py-1 flex items-center justify-center rounded-md bg-blue-600 text-white"
             type="submit"

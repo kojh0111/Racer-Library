@@ -30,7 +30,6 @@ def borrow_book(book_id):
     else:
         flash("남은 책이 없습니다.")
         book = rentalBook.query.filter(book_id == book_id).first()
-    print(type(book.rental_date))
     return redirect(url_for("index"))
 
 

@@ -2,7 +2,7 @@
 {% block title %}회원가입{% endblock %}
 
 {% block content %}
-<form action="{{ url_for('auth.register') }}" method="post"
+<form action="{{ url_for('auth.post_register') }}" method="post"
     class="flex flex-col justify-center item-center mt-20">
     <input class="w-96 rounded-md mt-8 px-6 py-4 mx-auto  border border-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" type="text" name="username" id="username" placeholder="이름" value="{{ username }}" />
     {% if errormsg=="이름을 입력해 주세요." %}<label for="username" class="text-red-500 text-sm mx-auto w-96">한글 또는 영문만 입력가능합니다</label>{% endif %}
