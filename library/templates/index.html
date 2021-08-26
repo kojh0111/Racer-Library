@@ -37,11 +37,11 @@
         </span>
         {% if g.user and not book.rented %}
         <button 
-            class="w-1/2 py-1 flex items-center justify-center rounded-md bg-blue-600 text-white"
+            class="w-1/2 py-1 mb-2 flex items-center justify-center rounded-md bg-blue-600 text-white"
             type="submit"
         >대여하기</button>
         {% else %}
-        <div class="w-1/2 py-1 flex items-center justify-center rounded-md bg-blue-300 text-white">대여불가</div>
+        <div class="w-1/2 py-1 mb-2 flex items-center justify-center rounded-md bg-blue-300 text-white">대여불가</div>
         {% endif %}
     </form>
     {% endfor %}
