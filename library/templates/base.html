@@ -18,12 +18,18 @@
     <section class="content mt-6">
         {% block content %}{% endblock %}
     </section>
-    <div class="absolute z-50 inset-0 flex justify-center item-center">    
+    {% if get_flashed_messages() %}
+    <div id="alertbox" class="absolute z-0 inset-0 flex justify-center item-center">    
         {% for message in get_flashed_messages() %}
             <div id="alert" class="inline px-6 py-4 my-auto rounded-md bg-red-500 font-bold text-white">{{ message }}</div>
         {% endfor %}
     </div>
+    {% endif %}
     {% block script %}{% endblock %}
+    <script>
+        const box = document.querySelector("#alertbox");
+        setTimeout(function() {box.classList.add("hidden");}, 3000);
+    </script>
 </body>
 
 </html>
