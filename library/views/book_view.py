@@ -65,7 +65,7 @@ def return_book(book_id):
         libBook.rented = False
         book = (
             rentalBook.query.filter(rentalBook.book_id == book_id)
-            .order_by(rentalBook.rental_date.desc())
+            .order_by(rentalBook.return_date.desc())
             .first()
         )
         book.return_date = date.today()

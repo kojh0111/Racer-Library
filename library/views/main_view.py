@@ -42,7 +42,7 @@ def home():
         libBook = libraryBook.query.filter(libraryBook.id == book.id).first()
         borBook = (
             rentalBook.query.filter(rentalBook.book_id == book.id)
-            .order_by(rentalBook.rental_date.desc())
+            .order_by(rentalBook.return_date.desc())
             .first()
         )
         try:
